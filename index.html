@@ -17,7 +17,7 @@
         .filter-group { flex: 1; min-width: 140px; }
         .filter-group h3 { margin-top: 0; margin-bottom: 10px; font-size: 1rem; border-bottom: 2px solid #e9ecef; padding-bottom: 5px; }
         .checkbox-list { max-height: 200px; overflow-y: auto; border: 1px solid #ced4da; padding: 8px; border-radius: 6px; background-color: #fff; }
-        .checkbox-list label { display: block; margin-bottom: 6px; padding: 2px 0; }
+        .checkbox-list label { display: block; margin-bottom: 6px; padding: 2px 0; cursor: pointer; }
         .checkbox-list input { margin-right: 8px; transform: scale(1.1); }
         #results-container { background-color: #fff; padding: 15px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
         #results-count { font-weight: bold; margin-bottom: 10px; color: #007bff; }
@@ -25,7 +25,11 @@
         #results-table th, #results-table td { border: 1px solid #dee2e6; padding: 12px 8px; text-align: left; }
         #results-table th { background-color: #007bff; color: white; position: sticky; top: 0; }
         #results-table tr:nth-child(even) { background-color: #f8f9fa; }
-        .map-link { color: #007bff; text-decoration: none; font-weight: 500; }
+        .map-link { color: #007bff; text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; }
+        .map-icon { margin-right: 4px; }
+        
+        /* 增加 hover 效果讓操作感更好 */
+        .checkbox-list label:hover { background-color: #f1f3f5; }
     </style>
 </head>
 <body>
@@ -192,7 +196,8 @@
                 
                 const addressCell = row.insertCell();
                 const addressText = item['地址'];
-                const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addressText)}`;
+                // *** 修正重點：使用正確的 Google Maps 搜尋 URL 格式，並修正變數插值語法 ***
+                const mapUrl = `https://www.google.com/maps?q=${encodeURIComponent(addressText)}`;
                 
                 const link = document.createElement('a');
                 link.href = mapUrl;
